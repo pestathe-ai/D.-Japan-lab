@@ -121,7 +121,7 @@ class AppSettings {
     try {
       final m = jsonDecode(raw);
       if (m is! Map) return d;
-      double num(String k, double def) {
+      double numOr(String k, double def) {
         final v = m[k];
         return v is num && v.isFinite && v >= 0 ? v.toDouble() : def;
       }
@@ -129,13 +129,13 @@ class AppSettings {
       final lang = m['language'];
       return AppSettings(
         language: lang is String ? lang : d.language,
-        eurPerYen: num('eurPerYen', d.eurPerYen),
+        eurPerYen: numOr('eurPerYen', d.eurPerYen),
         rateUpdatedAt: DateTime.tryParse('${m['rateUpdatedAt']}'),
-        serviceFeePerItemYen: num('serviceFeePerItemYen', d.serviceFeePerItemYen),
-        paymentFeePct: num('paymentFeePct', d.paymentFeePct),
-        vatPct: num('vatPct', d.vatPct),
-        dutyPct: num('dutyPct', d.dutyPct),
-        customsHandlingEur: num('customsHandlingEur', d.customsHandlingEur),
+        serviceFeePerItemYen: numOr('serviceFeePerItemYen', d.serviceFeePerItemYen),
+        paymentFeePct: numOr('paymentFeePct', d.paymentFeePct),
+        vatPct: numOr('vatPct', d.vatPct),
+        dutyPct: numOr('dutyPct', d.dutyPct),
+        customsHandlingEur: numOr('customsHandlingEur', d.customsHandlingEur),
       );
     } catch (_) {
       return d;
